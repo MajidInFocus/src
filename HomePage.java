@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.border.BevelBorder;
 
 /**
@@ -10,24 +12,30 @@ import javax.swing.border.BevelBorder;
  * panel3 for bus schedule table with columns: Bus Number, Line, Departure Time
  * panel4 for login with text "Login" and text fields with text "Username" and "Password" and buttons "Login" and "Register" and "Quit"
  */
-public class HomePage extends JFrame
-{
-    public HomePage()
-    {
+
+public class HomePage extends JFrame {
+    private List<User> users;
+
+    public HomePage() {
+        // Initialize the list of users
+        users = new ArrayList<>();
+        users.add(new User("admin", "admin", true)); // Admin user
+        users.add(new User("user1", "password1", false)); // Regular user
+        users.add(new User("user2", "password2", false)); // Regular user
+
         setTitle("Home");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(1000, 800);
         setResizable(false);
         setLayout(null);
-        setLocationRelativeTo(null); 
-        
-        //add a background image 
+        setLocationRelativeTo(null);
+
+        // Add a background image
         ImageIcon originalIcon = new ImageIcon("/Users/majid/Desktop/OOP /FinalProjectGP/ProjectUI/ProjectOOP/src/bg.png");
 
         // Scale the image to fit the frame size
         Image scaledImage = originalIcon.getImage().getScaledInstance(1000, 850, Image.SCALE_SMOOTH);
         ImageIcon scaledIcon = new ImageIcon(scaledImage);
-
         JLabel backgroundLabel = new JLabel(scaledIcon);
         backgroundLabel.setBounds(0, 0, 1000, 850);
 
@@ -45,10 +53,9 @@ public class HomePage extends JFrame
         LabelLogo2.setFont(new Font("Aharoni", Font.BOLD, 15));
         LabelLogo2.setForeground(Color.WHITE);
         LabelLogo2.setBounds(30, 40, 940, 40);
-    
+
         panel0.add(LabelLogo1);
         panel0.add(LabelLogo2);
-
 
         // Panel 1
         JPanel panel1 = new JPanel();
@@ -74,7 +81,6 @@ public class HomePage extends JFrame
         panel1.add(searchButton);
         panel1.add(clearButton);
 
-
         // Panel 2
         JPanel panel2 = new JPanel();
         panel2.setBounds(0, 150, 1000, 200);
@@ -88,7 +94,7 @@ public class HomePage extends JFrame
 
         panel2.add(scrollPane1);
 
-        //panel3
+        // Panel 3
         JPanel panel3 = new JPanel();
         panel3.setBounds(0, 350, 1000, 200);
         panel3.setLayout(null);
@@ -118,7 +124,7 @@ public class HomePage extends JFrame
         LabelPassword.setFont(new Font("Aharoni", Font.BOLD, 15));
         LabelPassword.setForeground(Color.WHITE);
         LabelPassword.setBounds(600, 50, 200, 40);
-        JPasswordField passwordField = new JPasswordField( 15);
+        JPasswordField passwordField = new JPasswordField(15);
         passwordField.setBounds(705, 50, 250, 45);
 
         JButton loginButton = new JButton("Login");
@@ -149,11 +155,100 @@ public class HomePage extends JFrame
         // Quit button functionality
         quitButton.addActionListener(e -> System.exit(0));
 
+        // Add action listener for login button
+        loginButton.addActionListener(e -> {
+            String username = usernameField.getText();
+            String password = new String(passwordField.getPassword());
+            if (authenticate(username, password)) {
+                // Redirect to AdminDashboard or UserDashboard based on user role
+                if (isAdmin(username)) {
+                    new AdminDashboard().setVisible(true);
+                } else {
+                    new booking().setVisible(true);
+                }
+                dispose(); // Close the login window
+            } else {
+                JOptionPane.showMessageDialog(this, "Invalid credentials", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+
+        // Add action listener for register button
+        registerButton.addActionListener(e -> {
+            String username = usernameField.getText();
+            String password = new String(passwordField.getPassword());
+            if (register(username, password)) {
+                JOptionPane.showMessageDialog(this, "Registration successful", "Success", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Username already exists", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+
         add(panel4);
         add(panel3);
         add(panel2);
         add(panel1);
         add(panel0);
         add(backgroundLabel);
+    }
+
+    private boolean authenticate(String username, String password) {
+        // Implementing authentication logic here
+        for (User user : users) {
+            if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean isAdmin(String username) {
+        // Implement logic to check if the user is an admin
+        for (User user : users) {
+            if (user.getUsername().equals(username) && user.isAdmin()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean register(String username, String password) {
+        // Check if the username already exists
+        for (User user : users) {
+            if (user.getUsername().equals(username)) {
+                return false; // Username already exists
+            }
+        }
+        // Add new user to the list
+        users.add(new User(username, password, false));
+        return true;
+    }
+
+    public static void main(String[] args) {
+        new HomePage().setVisible(true);
+    }
+}
+
+// User class to store user details
+class User {
+    private String username;
+    private String password;
+    private boolean isAdmin;
+
+    public User(String username, String password, boolean isAdmin) {
+        this.username = username;
+        this.password = password;
+        this.isAdmin = isAdmin;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public boolean isAdmin() {
+        return isAdmin;
     }
 }

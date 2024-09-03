@@ -22,16 +22,13 @@ public class booking extends JFrame
     setLayout(null);
     setLocationRelativeTo(null); 
 
-    //add a background image 
-    ImageIcon originalIcon = new ImageIcon("/Users/majid/Desktop/OOP /FinalProjectGP/ProjectUI/ProjectOOP/src/bg.png");
-
-    // Scale the image to fit the frame size
-    Image scaledImage = originalIcon.getImage().getScaledInstance(1000, 850, Image.SCALE_SMOOTH);
-    ImageIcon scaledIcon = new ImageIcon(scaledImage);
-
-    JLabel backgroundLabel = new JLabel(scaledIcon);
-    backgroundLabel.setBounds(0, 0, 1000, 850);
-
+ // Add a background image
+ ImageIcon originalIcon = new ImageIcon("./py_bg.jpg");
+ Image scaledImage = originalIcon.getImage().getScaledInstance(1000, 850, Image.SCALE_SMOOTH);
+ ImageIcon scaledIcon = new ImageIcon(scaledImage);
+ JLabel backgroundLabel = new JLabel(scaledIcon);
+ backgroundLabel.setBounds(0, 0, 1000, 800);
+ add(backgroundLabel);
     // Panel 0
     JPanel panel0 = new JPanel();
     panel0.setBackground(new Color(0x8F1402));
@@ -199,6 +196,12 @@ public class booking extends JFrame
 
     // Quit button functionality
     quitButton.addActionListener(e -> System.exit(0));
+
+    // logout button functionality
+    logoutButton.addActionListener(e -> {
+        new HomePage().setVisible(true);
+        dispose(); // Close the current window
+    });
 
     add(quitButton);
     add(logoutButton);
