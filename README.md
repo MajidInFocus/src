@@ -27,6 +27,7 @@ The goal is to create a comprehensive, secure, and scalable system tailored to p
 	- loading.java: A visually appealing loading screen for a smooth startup experience.
 
 3. Backend Implementation Options 💻
+
    This UI is designed to be adaptable, supporting multiple backend implementation strategies. Below are two possible approaches:
 
    **- Simple Arrays for Data Handling**
