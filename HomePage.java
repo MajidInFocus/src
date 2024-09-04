@@ -13,6 +13,7 @@ import javax.swing.border.BevelBorder;
  * panel4 for login with text "Login" and text fields with text "Username" and "Password" and buttons "Login" and "Register" and "Quit"
  */
 //main class for home page
+//main class for home page
 
 public class HomePage extends JFrame {
     private List<User> users;
