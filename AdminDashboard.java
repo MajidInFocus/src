@@ -22,7 +22,7 @@ public class AdminDashboard extends JFrame
         panel0.setBounds(0, 0, 800, 80);
         panel0.setLayout(null);
 
-        JLabel LabelLogo1 = new JLabel("I-Go!");
+        JLabel LabelLogo1 = new JLabel("i-Go!");
         LabelLogo1.setFont(new Font("Aharoni", Font.BOLD, 50));
         LabelLogo1.setForeground(Color.WHITE);
         LabelLogo1.setBounds(30, 5, 940, 50);
@@ -37,24 +37,31 @@ public class AdminDashboard extends JFrame
         // Tabbed pane to hold different functionalities
         JTabbedPane tabbedPane = new JTabbedPane();
         tabbedPane.setBounds(50, 100, 700, 780);
+        
 
         // Add tabs
-        tabbedPane.addTab("Manage User", manageUser());
+        tabbedPane.addTab("Manage User", NewUser());
         tabbedPane.addTab("Create Schedule", createSchedulePanel());
         tabbedPane.addTab("Update Schedule", updateSchedulePanel());
        // tabbedPane.addTab("Delete Schedule", deleteSchedulePanel());
         tabbedPane.addTab("Assign Transport", assignTransportPanel());
 
         //Add two buttons "Logout" and "Quit"
-        JButton logoutButton = new JButton("Logout");
-        logoutButton.setFont(BOLD_FONT);
-        logoutButton.setBounds(250, 800, 140, 45);
-        JButton quitButton = new JButton("Quit");
-        quitButton.setFont(BOLD_FONT);
-        quitButton.setBounds(400, 800, 140, 45);
+    JButton logoutButton = new JButton("Logout");
+    logoutButton.setFont(BOLD_FONT);
+    logoutButton.setBounds(350, 750, 140, 45);
+    JButton quitButton = new JButton("Quit");
+    quitButton.setFont(BOLD_FONT);
+    quitButton.setBounds(510, 750, 140, 45);
 
-        // Quit button functionality
-        quitButton.addActionListener(e -> System.exit(0));
+    // Quit button functionality
+    quitButton.addActionListener(e -> System.exit(0));
+
+    // logout button functionality
+    logoutButton.addActionListener(e -> {
+        new HomePage().setVisible(true);
+        dispose(); // Close the current window
+    });
 
 
         add(panel0);
@@ -66,7 +73,7 @@ public class AdminDashboard extends JFrame
 
 
     // Panel for "New User"
-    private JPanel manageUser() {
+    private JPanel NewUser() {
         JPanel panel = new JPanel();
         panel.setLayout(null);
 
