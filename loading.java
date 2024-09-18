@@ -11,7 +11,7 @@ public class loading extends JFrame
         setResizable(false);
         setLayout(null);
         setLocationRelativeTo(null);
-
+        //setUndecorated(true);
         //add a background image 
         ImageIcon originalIcon = new ImageIcon("./bg.png");
 
