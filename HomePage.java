@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Arrays;
-
+//main class
 public class HomePage extends JFrame {
     private List<User> users;
     private DefaultTableModel trainTableModel;
