@@ -6,8 +6,24 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+
 import java.util.Arrays;
-//main class
+
+import javax.swing.border.BevelBorder;
+
+/**
+ * Create 5 panels for home page UI
+ * panel0 for logo with text Public Scheduling Transportation System"
+ * panel1 for search bar and buttons and a label with text "Search"
+ * panel2 for train schedule table with columns: Train Number, Line, Departure Time
+ * panel3 for bus schedule table with columns: Bus Number, Line, Departure Time
+ * panel4 for login with text "Login" and text fields with text "Username" and "Password" and buttons "Login" and "Register" and "Quit"
+ */
+//main class for home page
+//main class for home page
+//main class for home page
+//main class for home pagew
+
 public class HomePage extends JFrame {
     private List<User> users;
     private DefaultTableModel trainTableModel;
