@@ -1,9 +1,9 @@
-# 🚍 Public Scheduling System UI
+# 🚍 iGo
 
 ## 1. Introduction 📚
 
 ### Project Overview
-The **Public Scheduling System UI** project provides a user-friendly interface for managing and interacting with public transportation schedules, including both buses and trains. This project is part of a collaborative effort, where my focus was on developing a responsive and intuitive UI. The next step involves integrating the backend to make this system fully functional.
+The **iGo** project provides a user-friendly interface for managing and interacting with public transportation schedules, including both buses and trains. This project is part of a collaborative effort, where my focus was on developing a responsive and intuitive UI. The next step involves integrating the backend to make this system fully functional.
 
 ### Objective
 The goal is to create a comprehensive, secure, and scalable system tailored to public transportation needs. The UI is designed to be flexible, allowing for easy backend integration and providing a seamless user experience.
@@ -13,8 +13,9 @@ The goal is to create a comprehensive, secure, and scalable system tailored to p
 ### Directory Overview
 	src/
 	├── HomePage.java          # Main entry point for the application
-	├── AdminDashboard.java    # Admin interface for managing schedules
-	├── booking.java           # Handles booking operations for users
+	├── AdminDashboard.java    # Admin interface for managing 	
+	├── AdminMethods.java      # Admin interface for managing 
+	├── booking.java           # Handles booking operations for usersschedules
 	├── loading.java           # Displays a loading screen during startup
 	├── App.java               # Main application class
 	├── bg.png                 # Background image used in the UI
@@ -26,7 +27,7 @@ The goal is to create a comprehensive, secure, and scalable system tailored to p
 	- booking.java: Allows users to book trips.
 	- loading.java: A visually appealing loading screen for a smooth startup experience.
 
-3. Backend Implementation Options 💻
+## 3. Backend Implementation Options 💻
 
    This UI is designed to be adaptable, supporting multiple backend implementation strategies. Below are two possible approaches:
 
@@ -57,37 +58,8 @@ The goal is to create a comprehensive, secure, and scalable system tailored to p
 			    return schedules;
 			}
 		    }
-    **- SQL Database Integration**
-      
-      **Overview**
-      For a production-level application, integrating with a SQL database is recommended to handle data persistence and complex queries.
-
-      **Steps:**
-   	- *Database Selection:* Choose a relational database like MySQL or PostgreSQL.
-   	- *Schema Design:* Create tables for Users, Schedules, Bookings, etc.
-   	- *Database Connection:* Use JDBC or ORM tools like Hibernate to connect the UI with the database.
-   	- *CRUD Operations:* Implement Create, Read, Update, and Delete operations to manage data effectively.
-
-      _**Sample Code:**_
-      
-	            import java.sql.Connection;
-	            import java.sql.DriverManager;
-	            import java.sql.SQLException;
-	            public class DatabaseConnector {
-	                private static final String URL = "jdbc:mysql://localhost:3306/public_schedule_db";
-	                private static final String USER = "root";
-	                private static final String PASSWORD = "password";
-	                public static Connection getConnection() {
-	                    try {
-	                        return DriverManager.getConnection(URL, USER, PASSWORD);
-	                    } catch (SQLException e) {
-	                        e.printStackTrace();
-	                        return null;
-	                    }
-	                }
-	            }
-
-5. Getting Started 🚀
+   
+## 4. Getting Started 🚀
    
    **Prerequisites**
    	* Java Development Kit (JDK) 8+
@@ -102,16 +74,38 @@ The goal is to create a comprehensive, secure, and scalable system tailored to p
 		* Use your IDE’s build tools to compile the code.
   		* Run App.java as the main class to launch the UI.
      
-7. Contribution Guidelines 👥
+## 5. Images 📷
+
+	To enhance the visual appeal of the UI, we have included some screenshots and images of the iGo application. Take a look at the following images:
+
+	### Loading Page
+![Loading Page](screenshot/loadingPage.png)
+*Caption: The loading page of the iGo application.*
+
+### Home Page
+![Home Page](/screenshot/HomePage.png)
+*Caption: The homepage of the iGo application.*
+
+### Admin Dashboard
+![Admin Dashboard](/screenshot/AdminDashboard.png)
+*Caption: Admin dashboard for managing schedules.*
+
+### Booking Page
+![Booking Page](/screenshot/BookingPage.png)
+*Caption: User booking interface.*
+
+	Feel free to explore the application and see how it looks in action!
+
+## 6. Contribution Guidelines 👥
 
 We welcome contributions! Whether you’re fixing bugs or implementing new features, your input is valuable.
 
 Steps to Contribute:
 - Fork the repository.
-- Create your feature branch (git checkout -b feature/AmazingFeature).
+- Create your feature branch (git checkout -b talha1230/iGo).
 - Commit your changes (git commit -m 'Add some AmazingFeature').
-- Push to the branch (git push origin feature/AmazingFeature).
+- Push to the branch (git push origin talha1230/iGo).
 - Open a pull request.
    
 ---
-Feel free to explore, experiment, and contribute to this project. Your feedback is highly appreciated!
+### Feel free to explore, experiment, and contribute to this project. Your feedback is highly appreciated!
