@@ -1,7 +1,14 @@
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+
+import java.util.Arrays;
+
 import javax.swing.border.BevelBorder;
 
 /**
@@ -15,186 +22,265 @@ import javax.swing.border.BevelBorder;
 //main class for home page
 //main class for home page
 
+
 public class HomePage extends JFrame {
     private List<User> users;
+    private DefaultTableModel trainTableModel;
+    private DefaultTableModel busTableModel;
+    private JTable trainTable;
+    private JTable busTable;
+    private JTextField trainSearchField;
+    private JTextField busSearchField;
 
     public HomePage() {
-        // Initialize the list of users
+        // Initialize user list
         users = new ArrayList<>();
-        users.add(new User("admin", "admin", true)); // Admin user
-        users.add(new User("user1", "password1", false)); // Regular user
-        users.add(new User("user2", "password2", false)); // Regular user
+        users.add(new User("admin", "admin", true));
+        users.add(new User("user1", "password1", false));
+        users.add(new User("user2", "password2", false));
 
         setTitle("Home");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(1000, 800);
-        setResizable(false);
-        setLayout(null);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        setResizable(true);
         setLocationRelativeTo(null);
 
-        // Add a background image
-        ImageIcon originalIcon = new ImageIcon("/Users/majid/Desktop/OOP /FinalProjectGP/ProjectUI/ProjectOOP/src/bg.png");
-
-        // Scale the image to fit the frame size
-        Image scaledImage = originalIcon.getImage().getScaledInstance(1000, 850, Image.SCALE_SMOOTH);
-        ImageIcon scaledIcon = new ImageIcon(scaledImage);
-        JLabel backgroundLabel = new JLabel(scaledIcon);
-        backgroundLabel.setBounds(0, 0, 1000, 850);
-
-        // Panel 0
+        // Panel 0: Header panel
         JPanel panel0 = new JPanel();
-        panel0.setBounds(0, 0, 1000, 100);
         panel0.setBackground(new Color(0x8F1402));
-        panel0.setLayout(null);
+        panel0.setLayout(new BorderLayout());
+        panel0.setPreferredSize(new Dimension(1000, 100));
 
-        JLabel LabelLogo1 = new JLabel("I-Go!");
-        LabelLogo1.setFont(new Font("Aharoni", Font.BOLD, 50));
-        LabelLogo1.setForeground(Color.WHITE);
-        LabelLogo1.setBounds(30, 5, 940, 50);
-        JLabel LabelLogo2 = new JLabel("Public Scheduling Transportation System");
-        LabelLogo2.setFont(new Font("Aharoni", Font.BOLD, 15));
-        LabelLogo2.setForeground(Color.WHITE);
-        LabelLogo2.setBounds(30, 40, 940, 40);
+        JLabel labelLogo1 = new JLabel("I-Go!", SwingConstants.CENTER);
+        labelLogo1.setFont(new Font("Aharoni", Font.BOLD, 50));
+        labelLogo1.setForeground(Color.WHITE);
 
-        panel0.add(LabelLogo1);
-        panel0.add(LabelLogo2);
+        JLabel labelLogo2 = new JLabel("Public Scheduling Transportation System", SwingConstants.CENTER);
+        labelLogo2.setFont(new Font("Aharoni", Font.BOLD, 15));
+        labelLogo2.setForeground(Color.WHITE);
 
-        // Panel 1
-        JPanel panel1 = new JPanel();
-        panel1.setBounds(0, 100, 1000, 50);
-        panel1.setLayout(null);
-        panel1.setOpaque(false);
+        panel0.add(labelLogo1, BorderLayout.NORTH);
+        panel0.add(labelLogo2, BorderLayout.SOUTH);
 
-        JLabel LabelSearch1 = new JLabel("Enter Train/Bus No.:");
-        LabelSearch1.setFont(new Font("Aharoni", Font.BOLD, 15));
-        LabelSearch1.setForeground(Color.BLACK);
-        LabelSearch1.setBounds(450, 5, 200, 40);
-        JTextField searchField = new JTextField(15);
-        searchField.setBounds(605, 5, 200, 40);
-        JButton searchButton = new JButton("Search");
-        searchButton.setFont(new Font("Aharoni", Font.BOLD, 15));
-        searchButton.setBounds(805, 5, 100, 40);
-        JButton clearButton = new JButton("Clear");
-        clearButton.setFont(new Font("Aharoni", Font.BOLD, 15));
-        clearButton.setBounds(900, 5, 100, 40);
+        // Panel 2: Train table panel
+        JPanel panel2 = new JPanel(new BorderLayout());
+        panel2.setBorder(new EmptyBorder(0, 100, 0, 0));
 
-        panel1.add(LabelSearch1);
-        panel1.add(searchField);
-        panel1.add(searchButton);
-        panel1.add(clearButton);
+        // Train search panel
+        JPanel trainSearchPanel = new JPanel();
+        JLabel trainLabelSearch = new JLabel("Enter Train No.:");
+        trainLabelSearch.setFont(new Font("Aharoni", Font.BOLD, 15));
+        trainSearchField = new JTextField(15);
+        JButton trainSearchButton = new JButton("Search");
+        JButton trainClearButton = new JButton("Clear");
 
-        // Panel 2
-        JPanel panel2 = new JPanel();
-        panel2.setBounds(0, 150, 1000, 200);
-        panel2.setLayout(null);
+        trainSearchPanel.add(trainLabelSearch);
+        trainSearchPanel.add(trainSearchField);
+        trainSearchPanel.add(trainSearchButton);
+        trainSearchPanel.add(trainClearButton);
 
         String[] trainColumns = {"Train Number", "Line", "Departure Time"};
-        Object[][] trainData = {}; // Data should be fetched and placed here
-        JTable trainTable = new JTable(trainData, trainColumns);
+        Object[][] trainData = {{"123", "Red Line", "12:00 PM"}, {"456", "Blue Line", "1:00 PM"}};
+        trainTableModel = new DefaultTableModel(trainData, trainColumns);
+        trainTable = new JTable(trainTableModel);
         JScrollPane scrollPane1 = new JScrollPane(trainTable);
-        scrollPane1.setBounds(0, 0, 1000, 200);
 
-        panel2.add(scrollPane1);
+        panel2.add(trainSearchPanel, BorderLayout.NORTH);
+        panel2.add(scrollPane1, BorderLayout.CENTER);
 
-        // Panel 3
+        // Panel 3: Bus table panel
         JPanel panel3 = new JPanel();
-        panel3.setBounds(0, 350, 1000, 200);
-        panel3.setLayout(null);
+        panel3.setLayout(new BoxLayout(panel3, BoxLayout.Y_AXIS));
+        panel3.setBorder(new EmptyBorder(0, 0, 0, 20));
+
+        // Create a container with margin for the bus panel content
+        JPanel busContentPanel = new JPanel(new BorderLayout());
+        busContentPanel.setBorder(new EmptyBorder(0, 0, 0, 100));
+
+        // Bus search panel
+        JPanel busSearchPanel = new JPanel();
+        JLabel busLabelSearch = new JLabel("Enter Bus No.:");
+        busLabelSearch.setFont(new Font("Aharoni", Font.BOLD, 15));
+        busSearchField = new JTextField(15);
+        JButton busSearchButton = new JButton("Search");
+        JButton busClearButton = new JButton("Clear");
+
+        busSearchPanel.add(busLabelSearch);
+        busSearchPanel.add(busSearchField);
+        busSearchPanel.add(busSearchButton);
+        busSearchPanel.add(busClearButton);
 
         String[] busColumns = {"Bus Number", "Line", "Departure Time"};
-        Object[][] busData = {}; // Data should be fetched and placed here
-        JTable busTable = new JTable(busData, busColumns);
+        Object[][] busData = {{"789", "Green Line", "2:00 PM"}, {"101", "Yellow Line", "3:00 PM"}};
+        busTableModel = new DefaultTableModel(busData, busColumns);
+        busTable = new JTable(busTableModel);
         JScrollPane scrollPane2 = new JScrollPane(busTable);
-        scrollPane2.setBounds(0, 0, 1000, 200);
 
-        panel3.add(scrollPane2);
+        busContentPanel.add(busSearchPanel, BorderLayout.NORTH);
+        busContentPanel.add(scrollPane2, BorderLayout.CENTER);
 
-        // Panel 4
+        panel3.add(busContentPanel);
+
+        // Panel 4: Login form panel
         JPanel panel4 = new JPanel();
-        panel4.setBounds(0, 550, 1000, 210);
-        panel4.setLayout(null);
-        panel4.setOpaque(false);
+        panel4.setOpaque(true);
+        panel4.setLayout(new GridBagLayout());
+        panel4.setBackground(new Color(0x8F1402));
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(5, 5, 5, 5);
 
-        JLabel LabelUsername = new JLabel("Username:");
-        LabelUsername.setFont(new Font("Aharoni", Font.BOLD, 15));
-        LabelUsername.setForeground(Color.WHITE);
-        LabelUsername.setBounds(600, 5, 200, 40);
+        JLabel labelUsername = new JLabel("Username:");
+        labelUsername.setFont(new Font("Aharoni", Font.BOLD, 15));
+        labelUsername.setForeground(Color.WHITE);
+
         JTextField usernameField = new JTextField(15);
-        usernameField.setBounds(705, 5, 250, 45);
 
-        JLabel LabelPassword = new JLabel("Password:");
-        LabelPassword.setFont(new Font("Aharoni", Font.BOLD, 15));
-        LabelPassword.setForeground(Color.WHITE);
-        LabelPassword.setBounds(600, 50, 200, 40);
+        JLabel labelPassword = new JLabel("Password:");
+        labelPassword.setFont(new Font("Aharoni", Font.BOLD, 15));
+        labelPassword.setForeground(Color.WHITE);
+
         JPasswordField passwordField = new JPasswordField(15);
-        passwordField.setBounds(705, 50, 250, 45);
 
         JButton loginButton = new JButton("Login");
         loginButton.setFont(new Font("Aharoni", Font.BOLD, 15));
-        loginButton.setBounds(705, 95, 120, 40);
 
-        JButton clearFormButton = new JButton("Clear");
+        JButton clearFormButton = new JButton("Admin?");
         clearFormButton.setFont(new Font("Aharoni", Font.BOLD, 15));
-        clearFormButton.setBounds(825, 95, 120, 40);
 
-        JButton registerButton = new JButton("Register");
+        JButton registerButton = new JButton("No account?");
         registerButton.setFont(new Font("Aharoni", Font.BOLD, 15));
-        registerButton.setBounds(705, 135, 240, 40);
 
         JButton quitButton = new JButton("Quit");
         quitButton.setFont(new Font("Aharoni", Font.BOLD, 15));
-        quitButton.setBounds(450, 170, 100, 40);
 
-        panel4.add(LabelUsername);
-        panel4.add(usernameField);
-        panel4.add(LabelPassword);
-        panel4.add(passwordField);
-        panel4.add(clearFormButton);
-        panel4.add(loginButton);
-        panel4.add(registerButton);
-        panel4.add(quitButton);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        panel4.add(labelUsername, gbc);
+        gbc.gridx = 1;
+        panel4.add(usernameField, gbc);
 
-        // Quit button functionality
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        panel4.add(labelPassword, gbc);
+        gbc.gridx = 1;
+        panel4.add(passwordField, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        panel4.add(loginButton, gbc);
+        gbc.gridx = 1;
+        panel4.add(clearFormButton, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        panel4.add(registerButton, gbc);
+        gbc.gridx = 1;
+        panel4.add(quitButton, gbc);
+
+        // Train search button action
+        trainSearchButton.addActionListener(e -> {
+            String searchText = trainSearchField.getText().trim();
+            if (searchText.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Please enter a Train number.", "Error", JOptionPane.ERROR_MESSAGE);
+            } else {
+                filterTrainTable(searchText);
+            }
+        });
+
+        // Train clear button action
+        trainClearButton.addActionListener(e -> {
+            trainSearchField.setText("");
+            reloadTrainTable();
+        });
+
+        // Bus search button action
+        busSearchButton.addActionListener(e -> {
+            String searchText = busSearchField.getText().trim();
+            if (searchText.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Please enter a Bus number.", "Error", JOptionPane.ERROR_MESSAGE);
+            } else {
+                filterBusTable(searchText);
+            }
+        });
+
+        // Bus clear button action
+        busClearButton.addActionListener(e -> {
+            busSearchField.setText("");
+            reloadBusTable();
+        });
+
         quitButton.addActionListener(e -> System.exit(0));
 
-        // Add action listener for login button
+        // Login button
         loginButton.addActionListener(e -> {
             String username = usernameField.getText();
             String password = new String(passwordField.getPassword());
             if (authenticate(username, password)) {
-                // Redirect to AdminDashboard or UserDashboard based on user role
-                if (isAdmin(username)) {
-                    new AdminDashboard().setVisible(true);
-                } else {
-                    new booking().setVisible(true);
-                }
-                dispose(); // Close the login window
+                new booking().setVisible(true);
+                dispose();
             } else {
                 JOptionPane.showMessageDialog(this, "Invalid credentials", "Error", JOptionPane.ERROR_MESSAGE);
             }
         });
 
-        // Add action listener for register button
+        // No account? button
         registerButton.addActionListener(e -> {
-            String username = usernameField.getText();
-            String password = new String(passwordField.getPassword());
-            if (register(username, password)) {
-                JOptionPane.showMessageDialog(this, "Registration successful", "Success", JOptionPane.INFORMATION_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(this, "Username already exists", "Error", JOptionPane.ERROR_MESSAGE);
+            JTextField regUsernameField = new JTextField(15);
+            JPasswordField regPasswordField = new JPasswordField(15);
+
+            JPanel registerPanel = new JPanel(new GridLayout(2, 2));
+            registerPanel.add(new JLabel("Username:"));
+            registerPanel.add(regUsernameField);
+            registerPanel.add(new JLabel("Password:"));
+            registerPanel.add(regPasswordField);
+
+            int result = JOptionPane.showConfirmDialog(this, registerPanel, "Register", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+            if (result == JOptionPane.OK_OPTION) {
+                String username = regUsernameField.getText();
+                String password = new String(regPasswordField.getPassword());
+                if (register(username, password)) {
+                    JOptionPane.showMessageDialog(this, "Registration successful", "Success", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Username already exists", "Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
 
-        add(panel4);
-        add(panel3);
-        add(panel2);
-        add(panel1);
-        add(panel0);
-        add(backgroundLabel);
+        // Admin? button
+        clearFormButton.addActionListener(e -> {
+            JTextField adminUsernameField = new JTextField(15);
+            JPasswordField adminPasswordField = new JPasswordField(15);
+
+            JPanel adminPanel = new JPanel(new GridLayout(2, 2));
+            adminPanel.add(new JLabel("Username:"));
+            adminPanel.add(adminUsernameField);
+            adminPanel.add(new JLabel("Password:"));
+            adminPanel.add(adminPasswordField);
+
+            int result = JOptionPane.showConfirmDialog(this, adminPanel, "Admin Login", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+            if (result == JOptionPane.OK_OPTION) {
+                String adminUsername = adminUsernameField.getText();
+                String adminPassword = new String(adminPasswordField.getPassword());
+                if (authenticate(adminUsername, adminPassword) && isAdmin(adminUsername)) {
+                    JOptionPane.showMessageDialog(this, "Admin login successful", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    new AdminDashboard().setVisible(true);
+                    dispose();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Invalid admin credentials", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+
+        // Main layout
+        setLayout(new BorderLayout());
+        add(panel0, BorderLayout.NORTH);
+        add(panel2, BorderLayout.WEST);
+        add(panel3, BorderLayout.EAST);
+        add(panel4, BorderLayout.SOUTH);
     }
 
     private boolean authenticate(String username, String password) {
-        // Implementing authentication logic here
         for (User user : users) {
             if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
                 return true;
@@ -204,7 +290,6 @@ public class HomePage extends JFrame {
     }
 
     private boolean isAdmin(String username) {
-        // Implement logic to check if the user is an admin
         for (User user : users) {
             if (user.getUsername().equals(username) && user.isAdmin()) {
                 return true;
@@ -214,15 +299,53 @@ public class HomePage extends JFrame {
     }
 
     private boolean register(String username, String password) {
-        // Check if the username already exists
         for (User user : users) {
             if (user.getUsername().equals(username)) {
-                return false; // Username already exists
+                return false;
             }
         }
-        // Add new user to the list
         users.add(new User(username, password, false));
         return true;
+    }
+
+    private void filterTrainTable(String trainNo) {
+        for (int i = 0; i < trainTableModel.getRowCount(); i++) {
+            String currentTrainNo = (String) trainTableModel.getValueAt(i, 0);
+            if (currentTrainNo.equals(trainNo)) {
+                trainTable.setRowSelectionInterval(i, i);
+                return;
+            }
+        }
+        JOptionPane.showMessageDialog(this, "Train number not found.", "Not Found", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    private void reloadTrainTable() {
+        // Reload the train table with original data
+        Object[][] trainData = {{"123", "Red Line", "12:00 PM"}, {"456", "Blue Line", "1:00 PM"}};
+        trainTableModel.setRowCount(0); // Clear existing data
+        for (Object[] row : trainData) {
+            trainTableModel.addRow(row);
+        }
+    }
+
+    private void filterBusTable(String busNo) {
+        for (int i = 0; i < busTableModel.getRowCount(); i++) {
+            String currentBusNo = (String) busTableModel.getValueAt(i, 0);
+            if (currentBusNo.equals(busNo)) {
+                busTable.setRowSelectionInterval(i, i);
+                return;
+            }
+        }
+        JOptionPane.showMessageDialog(this, "Bus number not found.", "Not Found", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    private void reloadBusTable() {
+        // Reload the bus table with original data
+        Object[][] busData = {{"789", "Green Line", "2:00 PM"}, {"101", "Yellow Line", "3:00 PM"}};
+        busTableModel.setRowCount(0); // Clear existing data
+        for (Object[] row : busData) {
+            busTableModel.addRow(row);
+        }
     }
 
     public static void main(String[] args) {
